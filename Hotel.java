@@ -1,32 +1,56 @@
-package designinghotel;
+package hotelDesignFinal;
 
-public class Hotel{
-    String name;
-    int bill;
-    Price price = new Price();
-    int rating;
-    CustomerType customerType;
-    Hotel(String name , int rating){
-        this.rating = rating;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Hotel {
+    protected String name;
+    protected int rating;
+    protected Map<Category , Integer> priceCard = new LinkedHashMap<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    void setPrice(int regularWeekdayPrice, int regularWeekendPrice, int rewardWeekdayPrice, int rewardWeekendPrice){
-        price.setRegularWeekdayPrice(regularWeekdayPrice);
-        price.setRegularWeekendPrice(regularWeekendPrice);
-        price.setRewardWeekdayPrice(rewardWeekdayPrice);
-        price.setRewardWeekendPrice(rewardWeekendPrice);
+    public int getRating() {
+        return rating;
     }
 
-    int calculate(CustomerType type , int weekDay , int weekendDay){
-        if(type == CustomerType.REWARD)
-        return bill = (price.getRewardWeekdayPrice()* weekDay + price.getRewardWeekendPrice()*weekendDay);
-        else if(type == CustomerType.REGULAR)
-            return bill = (price.getRegularWeekdayPrice()* weekDay + price.getRegularWeekendPrice()*weekendDay);
-        else
-            return 0;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
+
+    public Map<Category, Integer> getPriceCard() {
+        return priceCard;
+    }
+
+    public void setPriceCard(Map<Category, Integer> priceCard) {
+       this.priceCard = priceCard;
+    }
+
+    int getCostOf(List<Category> categories){
+        int price = 0;
+            for (Category billEvaluation : categories) {
+             for(Map.Entry priceCard : priceCard.entrySet()){
+                System.out.println("BILL : "+billEvaluation.hashCode());
+                 System.out.println("Pricecard : "+ priceCard.getKey().hashCode());
+                 if(billEvaluation.hashCode()==  priceCard.getKey().hashCode()){
+                    // System.out.println("Price before : "+price);
+                    price += (Integer) priceCard.getValue();
+                    // System.out.println("Price : "+price);
+
+                     // System.out.println("\n\n\nBILL : "+billEvaluation.hashCode());
+
+                 }
+             }
+            }
+        return price;
+    }
+
+
 }
-
-
-
